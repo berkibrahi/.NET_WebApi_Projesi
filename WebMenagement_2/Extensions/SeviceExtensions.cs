@@ -32,5 +32,9 @@ namespace WebMenagement_2.Extensions
 				);
 				
 		}
+		public static void ConfigureRepositoryManager(this IServiceCollection services)
+		{
+			services.AddScoped<IRepositorMenager, RepositoryMenagercs>();
+		}
 	}
 }

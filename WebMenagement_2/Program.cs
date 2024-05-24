@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureCors();
 builder.Services.ConfigureLoggerManager();
 builder.Services.ConfigureSqlServer(builder.Configuration);
+builder.Services.ConfigureRepositoryManager();
 
 
 var app = builder.Build();

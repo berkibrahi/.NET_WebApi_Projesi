@@ -6,7 +6,7 @@ namespace Entities.Models
 	public class Employee
     {
         [Column("EmployeeId")]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]

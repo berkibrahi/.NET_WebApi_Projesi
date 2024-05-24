@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Entities.Models;
-using Contracts; // Doğru using ifadesi, noktalı virgül eklenmiş
+using Contracts;
+using Repository; // Doğru using ifadesi, noktalı virgül eklenmiş
 
 namespace WebMenagement_2.Controllers
 {
@@ -11,9 +12,11 @@ namespace WebMenagement_2.Controllers
 	{
 		private ILoggerMenager _logger;
 		private List<Project> _projectList;
-        public ProjectsController(ILoggerMenager logger)
+		private IRepositorMenager _repository;
+        public ProjectsController(ILoggerMenager logger,IRepositorMenager repository)
         {
 			_logger = logger;
+			_repository = repository;
 			_projectList = new List<Project>{
 				new Project
 				{
@@ -33,7 +36,8 @@ namespace WebMenagement_2.Controllers
 		{
 			try {
 				_logger.LogInfo("project.Get() gerçeklerşti");
-			return Ok(_projectList);
+				var list = _repository.Project.GetAllProjects(false);
+			return Ok(list);
 			}
 			catch (Exception ex) {
 				_logger.LogError("project.Get() hatası oluşru" + ex.Message);
