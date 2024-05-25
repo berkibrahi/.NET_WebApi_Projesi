@@ -8,7 +8,7 @@ namespace Contracts
 		Employee GetEmployeeByProjectId(Guid projectId,Guid id, bool trackChanges);
 		void CreateEmployeeForProject(Guid projectId,Employee employee);
 		void DeleteEmployee(Employee employee);
-
-
+		
+		
 	}
 }

@@ -10,36 +10,36 @@ using System.Threading.Tasks;
 namespace ProjectManagement.Presentation.Controllers
 {
 	[ApiController]
-	[Route("api/projects")]
-	public class ProjectControllers:ControllerBase
+	[Route("api/projects/{projectId}/employees")]
+	public class EmployeesController:ControllerBase
 	{
 		private readonly IServiceManager _service;
 
-		public ProjectControllers(IServiceManager service)
+		public EmployeesController(IServiceManager service)
 		{
 			_service = service;
 		}
 		[HttpGet]
-		public IActionResult GetAllProjects()
+		public IActionResult GetAllEmployeProjectById(Guid projectId)
 		{
 			try
 			{
-				var projects = _service.ProjectService.GetAllProject(false);
-				return Ok(projects);
+				var employeelist = _service.EmployeeService.GetAllEmployeesByProjectId(projectId, false);
+				return Ok(employeelist);
 			}
-			catch (Exception ex)
-			{
+		    catch (Exception ex){
 				return StatusCode(500, "internal server error");
 				throw;
 			}
+
 		}
 		[HttpGet("{id:guid}")]
-		public IActionResult GetOneProjectById(Guid id)
+		public IActionResult GetoneEmployeeProjectById(Guid projectId,Guid id)
 		{
 			try
 			{
-				Project project = _service.ProjectService.GetOneProjectById(id, false);
-				return Ok(project);
+				var employee = _service.EmployeeService.GetoneEmployeeProjectById(projectId,id, false);
+				return Ok(employee);
 			}
 			catch (Exception ex)
 			{
