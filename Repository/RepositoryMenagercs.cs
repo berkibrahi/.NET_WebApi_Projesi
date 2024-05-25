@@ -9,21 +9,23 @@ namespace Repository
 {
 	public class RepositoryMenagercs : IRepositorMenager
 
+
 	{
 		private readonly RepositoryContext _context;
+		private Lazy<IProjectRepository> _projectRepository;
+		private Lazy<IEmployeeRepository> _employeeRepository;
 
 		public RepositoryMenagercs(RepositoryContext context)
 		{
 			_context = context;
-			_projectRepository = new ProjectRepository(_context);
-			_employeeRepository = new EmployeeRepository(_context);
+			_projectRepository = new Lazy<IProjectRepository>(()=>new ProjectRepository(_context));
+			_employeeRepository = new Lazy<IEmployeeRepository>(()=> new EmployeeRepository(_context));
 		}
 
-		private IProjectRepository _projectRepository;
-		private IEmployeeRepository _employeeRepository;
-		public IProjectRepository Project => _projectRepository;
+		
+		public IProjectRepository Project => _projectRepository.Value;
 
-		public IEmployeeRepository Employee => _employeeRepository;
+		public IEmployeeRepository Employee => _employeeRepository.Value;
 
 		public void Save()
 		{
