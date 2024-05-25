@@ -17,8 +17,17 @@ namespace Service
 
 		public IEnumerable<Project> GetAllProject(bool trackChanges)
 		{
-			var projects = _repository.Project.GetAllProjects(trackChanges);
-			return projects;
+			try
+			{
+				var projects = _repository.Project.GetAllProjects(trackChanges);
+				return projects;
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError("getallproject oluştu" + ex.Message);
+				throw;
+			}
+			
 		}
 	}
 }
