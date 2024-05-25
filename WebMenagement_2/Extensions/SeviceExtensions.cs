@@ -1,9 +1,11 @@
 ﻿using Contracts;
+using Service;
 using Entities.Models;
 using LoggerService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Repository;
+using ServiceContracts;
 
 namespace WebMenagement_2.Extensions
 {
@@ -31,6 +33,14 @@ namespace WebMenagement_2.Extensions
 			project=>project.MigrationsAssembly("WebMenagement_2"))
 				);
 				
+		}
+		public static void ConfigureRepositoryManager(this IServiceCollection services)
+		{
+			services.AddScoped<IRepositorMenager, RepositoryMenagercs>();
+		}
+		public static void ConfigureServiceManager(this IServiceCollection services)
+		{
+			services.AddScoped<IServiceManager, ServiceManager>();
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace Repository
 		}
 
 		public void Create(T entity) => _repositoryContext.Add(entity);
-		
+
 
 		public void Delete(T entity) => _repositoryContext.Remove(entity);
 
@@ -36,8 +36,9 @@ namespace Repository
 			!trackChanges ?
 			_repositoryContext.Set<T>().Where(expression).AsNoTracking() :
 			_repositoryContext.Set<T>();
-	
+
 
 		public void Update(T entity) => _repositoryContext.Update(entity);
 
 	}
+}
