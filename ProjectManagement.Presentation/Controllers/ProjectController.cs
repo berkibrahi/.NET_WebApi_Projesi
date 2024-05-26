@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entities.Models;
+using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,11 @@ namespace ProjectManagement.Presentation.Controllers
 {
 	[ApiController]
 	[Route("api/projects")]
-	public class ProjectControllers:ControllerBase
+	public class ProjectController:ControllerBase
 	{
 		private readonly IServiceManager _service;
 
-		public ProjectControllers(IServiceManager service)
+		public ProjectController(IServiceManager service)
 		{
 			_service = service;
 		}
@@ -29,6 +30,21 @@ namespace ProjectManagement.Presentation.Controllers
 			catch (Exception ex)
 			{
 				return StatusCode(500, "internal server error");
+				throw;
+			}
+		}
+		[HttpGet("{id:guid}")]
+		public IActionResult GetOneProjectById(Guid id)
+		{
+			try
+			{
+				var project = _service.ProjectService.GetOneProjectById(id, false);
+				return Ok(project);
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, "internal error");
+				throw;
 			}
 		}
 	}

@@ -1,6 +1,8 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
 using Entities.Models;
 using ServiceContracts;
+using Shared.DataTransferObjects;
 
 namespace Service
 {
@@ -8,19 +10,22 @@ namespace Service
 	{
 		private readonly IRepositorMenager _repository;
 		private readonly ILoggerMenager _logger;
+		private readonly IMapper _mapper;
 
-		public ProjectService(IRepositorMenager repository, ILoggerMenager logger)
+		public ProjectService(IRepositorMenager repository, ILoggerMenager logger,IMapper mapper)
 		{
 			_repository = repository;
 			_logger = logger;
+			_mapper = mapper;
 		}
 
-		public IEnumerable<Project> GetAllProject(bool trackChanges)
+		public IEnumerable<ProjectDto> GetAllProject(bool trackChanges)
 		{
 			try
 			{
 				var projects = _repository.Project.GetAllProjects(trackChanges);
-				return projects;
+				var projectDtos = _mapper.Map<IEnumerable<ProjectDto>>(projects);
+				return projectDtos;
 			}
 			catch (Exception ex)
 			{
@@ -28,6 +33,20 @@ namespace Service
 				throw;
 			}
 			
+		}
+
+		public ProjectDto GetOneProjectById(Guid id, bool trackChanges)
+		{
+			try
+			{
+				var project= _repository.Project.GetOneProjectById(id, trackChanges);
+				var projectDto = _mapper.Map<ProjectDto>(project);
+				return projectDto;
+			}catch (Exception ex)
+			{
+				_logger.LogError("project repository get project hata" + ex.Message);
+				throw;
+			}
 		}
 	}
 }

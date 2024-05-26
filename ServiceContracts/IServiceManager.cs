@@ -9,5 +9,6 @@ namespace ServiceContracts
 	public interface IServiceManager
 	{
 		public IProjectService ProjectService { get; }
+		public IEmployeeService EmployeeService { get; }
 	}
 }
