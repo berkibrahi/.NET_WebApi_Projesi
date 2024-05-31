@@ -1,6 +1,7 @@
 ﻿using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
+using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,30 +23,29 @@ namespace ProjectManagement.Presentation.Controllers
 		[HttpGet]
 		public IActionResult GetAllEmployeProjectById(Guid projectId)
 		{
-			try
-			{
+			
 				var employeelist = _service.EmployeeService.GetAllEmployeesByProjectId(projectId, false);
 				return Ok(employeelist);
-			}
-		    catch (Exception ex){
-				return StatusCode(500, "internal server error");
-				throw;
-			}
+			
 
 		}
-		[HttpGet("{id:guid}")]
+		[HttpGet("{id:guid}",Name ="GetOneEmployeeByProjectIdAndId")]
 		public IActionResult GetoneEmployeeProjectById(Guid projectId,Guid id)
 		{
-			try
-			{
+			
+			
 				var employee = _service.EmployeeService.GetoneEmployeeProjectById(projectId,id, false);
 				return Ok(employee);
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(500, "internal error");
-				throw;
-			}
+			
+			
 		}
-	}
+        [HttpPost]
+        public IActionResult CreateoneEmployeeProjectById(Guid projectId, [FromBody]EmployeeDtoForCreation employeeDto)
+        {
+
+			EmployeeDto employee = _service.EmployeeService.CreateoneEmployeeProjectById(projectId, employeeDto, true);
+
+			return CreatedAtRoute("GetOneEmployeeByProjectIdAndId", new { projectId, id = employee.Id }, employee);
+        }
+    }
 }

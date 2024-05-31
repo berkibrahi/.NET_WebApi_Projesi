@@ -20,7 +20,18 @@ namespace Service
 			_mapper = mapper;
 		}
 
-		public IEnumerable<ProjectDto> GetAllProject(bool trackChanges)
+        public ProjectDto CreateOneProject(ProjectDtoForCreation projectDto)
+        {
+			//Dto -> entity
+			var entity = _mapper.Map<Project>(projectDto);
+			// repo ->save
+			_repository.Project.CreateProject(entity);
+			_repository.Save();
+			//entity->Dto
+			return _mapper.Map<ProjectDto>(entity);
+        }
+
+        public IEnumerable<ProjectDto> GetAllProject(bool trackChanges)
 		{
 			
 				var projects = _repository.Project.GetAllProjects(trackChanges);
