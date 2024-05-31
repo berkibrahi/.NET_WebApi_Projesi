@@ -20,9 +20,21 @@ namespace Service
 			_mapper = mapper;
 		}
 
-	
+        public EmployeeDto CreateoneEmployeeProjectById(Guid projectId, EmployeeDtoForCreation employeeDto, bool trackChanges)
+        {
+            var project = _repository.Project.GetOneProjectById(projectId, false);
+            if (project == null)
+                throw new ProjectNotFoundExceptions(projectId);
+            var entity = _mapper.Map<Employee>(employeeDto);
+			entity.ProjectId = projectId;
+            // repo ->save
+            _repository.Employee.CreateEmployeeForProject(projectId,entity);
+            _repository.Save();
+            //entity->Dto
+            return _mapper.Map<EmployeeDto>(entity);
+        }
 
-		public IEnumerable<EmployeeDto> GetAllEmployeesByProjectId(Guid projectId, bool trackChanges)
+        public IEnumerable<EmployeeDto> GetAllEmployeesByProjectId(Guid projectId, bool trackChanges)
 		{
             CheckProjectExists(projectId);
             var employeelist = _repository.Employee.GetEmployeesByProjectId(projectId, trackChanges);

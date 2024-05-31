@@ -1,6 +1,7 @@
 ﻿using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using ServiceContracts;
+using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace ProjectManagement.Presentation.Controllers
 			
 
 		}
-		[HttpGet("{id:guid}")]
+		[HttpGet("{id:guid}",Name ="GetOneEmployeeByProjectIdAndId")]
 		public IActionResult GetoneEmployeeProjectById(Guid projectId,Guid id)
 		{
 			
@@ -38,5 +39,13 @@ namespace ProjectManagement.Presentation.Controllers
 			
 			
 		}
-	}
+        [HttpPost]
+        public IActionResult CreateoneEmployeeProjectById(Guid projectId, [FromBody]EmployeeDtoForCreation employeeDto)
+        {
+
+			EmployeeDto employee = _service.EmployeeService.CreateoneEmployeeProjectById(projectId, employeeDto, true);
+
+			return CreatedAtRoute("GetOneEmployeeByProjectIdAndId", new { projectId, id = employee.Id }, employee);
+        }
+    }
 }
