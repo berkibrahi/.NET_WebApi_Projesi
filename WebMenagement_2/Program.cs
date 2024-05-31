@@ -22,9 +22,13 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddControllers(config =>
 {
-	config.RespectBrowserAcceptHeader = true;
-}).AddXmlDataContractSerializerFormatters()
-	.AddApplicationPart(typeof(ProjectManagement.Presentation.AssemblyReference).Assembly);
+    config.RespectBrowserAcceptHeader = true;
+    config.ReturnHttpNotAcceptable = true;
+})
+    .AddXmlDataContractSerializerFormatters()
+ 
+    .AddApplicationPart(typeof(ProjectManagement.Presentation.AssemblyReference).Assembly);
+
 
 
 var app = builder.Build();
