@@ -20,8 +20,11 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.AddAutoMapper(typeof(Program));
 
-builder.Services.AddControllers().
-	AddApplicationPart(typeof(ProjectManagement.Presentation.AssemblyReference).Assembly);
+builder.Services.AddControllers(config =>
+{
+	config.RespectBrowserAcceptHeader = true;
+}).AddXmlDataContractSerializerFormatters()
+	.AddApplicationPart(typeof(ProjectManagement.Presentation.AssemblyReference).Assembly);
 
 
 var app = builder.Build();
