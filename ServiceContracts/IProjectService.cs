@@ -6,7 +6,8 @@ namespace ServiceContracts
 {
 	public interface IProjectService
 	{
-		IEnumerable<ProjectDto> GetAllProject(bool trackChanges);
+        ProjectDto CreateOneProject(ProjectDtoForCreation projectDto);
+        IEnumerable<ProjectDto> GetAllProject(bool trackChanges);
 		ProjectDto GetOneProjectById(Guid id, bool trackChanges);
 	}
 }

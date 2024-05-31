@@ -8,8 +8,9 @@ namespace WebMenagement_2.Utilities.Mapping
 	{
         public MappingProfile()
         {
-            CreateMap<Project, ProjectDto>();
+            CreateMap<Project, ProjectDto>().ReverseMap();
             CreateMap<Employee, EmployeeDto>();
+            CreateMap<ProjectDtoForCreation, Project>();
         }
     }
 }
