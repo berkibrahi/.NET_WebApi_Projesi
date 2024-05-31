@@ -22,30 +22,21 @@ namespace ProjectManagement.Presentation.Controllers
 		[HttpGet]
 		public IActionResult GetAllEmployeProjectById(Guid projectId)
 		{
-			try
-			{
+			
 				var employeelist = _service.EmployeeService.GetAllEmployeesByProjectId(projectId, false);
 				return Ok(employeelist);
-			}
-		    catch (Exception ex){
-				return StatusCode(500, "internal server error");
-				throw;
-			}
+			
 
 		}
 		[HttpGet("{id:guid}")]
 		public IActionResult GetoneEmployeeProjectById(Guid projectId,Guid id)
 		{
-			try
-			{
+			
+			
 				var employee = _service.EmployeeService.GetoneEmployeeProjectById(projectId,id, false);
 				return Ok(employee);
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(500, "internal error");
-				throw;
-			}
+			
+			
 		}
 	}
 }
